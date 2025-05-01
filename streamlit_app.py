@@ -24,8 +24,7 @@ def calculate_sdlt(price):
         (1500000, 0.17),
         (925000, 0.15),
         (250000, 0.10),
-        (125000, 0.07),
-        (40000, 0.05),
+        (0, 0.05),
     ]
     sdlt = 0
     for threshold, rate in brackets:
