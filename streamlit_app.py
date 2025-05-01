@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Title
-st.title("UK Property Investment Calculator (Ltd Company)")
+st.title("UK Property Investment Calculator (BTL Company)")
 
 # Input section
 property_price = st.number_input("Property Purchase Price (£)", value=375000)
