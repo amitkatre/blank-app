@@ -9,7 +9,7 @@ property_type = st.selectbox("Property Type", ["Regular Buy-to-Let", "HMO"])
 num_beds = st.number_input("Number of Bedrooms", min_value=1, max_value=12, value=5 if property_type == "HMO" else 1)
 monthly_rent_per_room = st.number_input("Monthly Rent per Room (£)", value=750)
 ltv = st.slider("Loan-to-Value (%)", min_value=50, max_value=90, value=75)
-interest_rate = st.number_input("Mortgage Interest Rate (%)", value=6.0)
+interest_rate = st.number_input("Mortgage Interest Rate (%)", value=5.0)
 renovation_cost = st.number_input("HMO Renovation Cost (£)", value=25000 if property_type == "HMO" else 0)
 self_managed = st.checkbox("Self-Managed?", value=True)
 
@@ -21,11 +21,20 @@ annual_interest = mortgage * interest_rate / 100
 # Stamp Duty (Ltd Co surcharge)
 def calculate_sdlt(price):
     sdlt = 0
+    if price > 1500000:
+        sdlt += (price - 1500000) * 0.17
+        price = 1500000
+    if price > 925000:
+        sdlt += (price - 925000) * 0.15
+        price = 925000
     if price > 250000:
-        sdlt += 250000 * 0.03
-        sdlt += (price - 250000) * 0.08
-    else:
-        sdlt += price * 0.03
+        sdlt += (price - 250000) * 0.10
+        price = 250000
+    if price > 125000:
+        sdlt += (price - 125000) * 0.07
+        price = 125000
+    if price > 40000:
+        sdlt += (price - 40000) * 0.05
     return sdlt
 
 stamp_duty = calculate_sdlt(property_price)
