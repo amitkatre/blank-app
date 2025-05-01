@@ -20,21 +20,18 @@ annual_interest = mortgage * interest_rate / 100
 
 # Stamp Duty (Ltd Co surcharge)
 def calculate_sdlt(price):
+    brackets = [
+        (1500000, 0.17),
+        (925000, 0.15),
+        (250000, 0.10),
+        (125000, 0.07),
+        (40000, 0.05),
+    ]
     sdlt = 0
-    if price > 1500000:
-        sdlt += (price - 1500000) * 0.17
-        price = 1500000
-    if price > 925000:
-        sdlt += (price - 925000) * 0.15
-        price = 925000
-    if price > 250000:
-        sdlt += (price - 250000) * 0.10
-        price = 250000
-    if price > 125000:
-        sdlt += (price - 125000) * 0.07
-        price = 125000
-    if price > 40000:
-        sdlt += (price - 40000) * 0.05
+    for threshold, rate in brackets:
+        if price > threshold:
+            sdlt += (price - threshold) * rate
+            price = threshold
     return sdlt
 
 stamp_duty = calculate_sdlt(property_price)
